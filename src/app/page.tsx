@@ -6,16 +6,18 @@ import store, { persistor } from "./reduxToolKit/store";
 import Login from "./components/login";
 import Logout from "./components/logout";
 import Register from "./components/register";
-import Rootlayout from "./routes/routLayout";
+import Rootlayout from "./provider/routLayoutProvider";
+import ForgetPassword from "./components/forgetPassword";
+import Dashboard from "./dashboard/page";
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        {/* <Component {...pageProps} /> */}
-        {/* <Rootlayout></Rootlayout> */}
-        <Login></Login>
-      </PersistGate>
-    </Provider>
+    <>
+      <div className="justify-center min-h-screen bg-gray-100 text-black">
+        <div>
+          <h1>Welcome</h1>
+        </div>
+      </div>
+    </>
   );
 };
 

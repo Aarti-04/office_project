@@ -1,13 +1,15 @@
+"use client";
 import React from "react";
 import Login from "../components/login";
 import Logout from "../components/logout";
+import Header from "../components/header";
 
-const dashboard = () => {
+const Dashboard = () => {
   return (
     <div>
-      <Logout></Logout> <Login></Login>
+      <Header></Header>
     </div>
   );
 };
 
-export default dashboard;
+export default Dashboard;

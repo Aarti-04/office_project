@@ -1,8 +1,17 @@
 import wretch from "wretch";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 // Base API setup for making HTTP requests
 const api = wretch("http://localhost:8000").accept("application/json");
+const checkSpamOrHam = async (text: string) => {
+  const res = await axios.post("http://127.0.0.1:8000/api/predict/", {
+    message: text,
+  });
+  alert(res.data["prediction"]);
+
+  return "hello";
+};
 /**
  * Stores a token in cookies.
  * @param {string} token - The token to be stored.
@@ -72,5 +81,6 @@ export const AuthActions = () => {
     getToken,
     logout,
     removeTokens,
+    checkSpamOrHam,
   };
 };

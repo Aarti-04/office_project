@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useForm } from "react-hook-form";
 // import { AuthActions } from "@/app/auth/utils";
@@ -7,7 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser, logoutUser } from "../reduxToolKit/userSlice";
 import { RootState, useAppDispatch } from "../reduxToolKit/store";
 import Logout from "./logout";
-import Navbar from "../routes/routLayout";
+import Navbar from "../provider/routLayoutProvider";
+import { motion } from "framer-motion";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 type FormData = {
   email: string;
   password: string;
@@ -44,18 +48,48 @@ const Login = () => {
     //     setError("root", { type: "manual", message: err.json.detail });
     //   });
   };
-  const logoutHandler = () => {
-    
-  }
+  const login = useGoogleLogin({
+    onSuccess: async (credentialResponse) => {
+      console.log(credentialResponse);
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/google-auth-verify/",
+        credentialResponse
+      );
+    },
+    flow: "auth-code",
+  });
   return (
     <div>
       {/* <Navbar></Navbar> */}
-      <Logout setLogout={() => dispatch(logoutUser())}></Logout>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg w-1/3">
-          <h3 className="text-2xl font-semibold">Login to your account</h3>
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-            <div>
+      {/* <Logout setLogout={() => dispatch(logoutUser())}></Logout> */}
+      <div className="flex items-center justify-center min-h-screen bg-white-100">
+        <div className="px-8 py-6 mt-4 text-black text-left bg-white shadow-lg w-1/2">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {
+                scale: 0.8,
+                opacity: 0,
+              },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: {
+                  delay: 0.2,
+                },
+              },
+            }}
+          >
+            <h3 className="text-2xl font-semibold">Login to your account</h3>
+          </motion.div>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
+            {/* Login using useGoogleLogin hook */}
+            {/* <div>
+              <button onClick={() => login()}>Sign in with google</button>
+            </div> */}
+            {/* Login custome form */}
+            {/* <div>
               <label className="block" htmlFor="email">
                 Email
               </label>
@@ -94,18 +128,35 @@ const Login = () => {
               <span className="text-xs text-red-600">
                 {errors.root.message}
               </span>
-            )}
+            )} */}
+            {/* Google login button */}
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                console.log(credentialResponse);
+                console.log(credentialResponse.credential);
+                const res = await axios.post(
+                  "http://127.0.0.1:8000/api/google-auth-verify/",
+                  credentialResponse
+                );
+                // login();
+                // router.push("");
+                // console.log(res);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
           </form>
           <div className="mt-6 text-center">
             <Link
-              href="/auth/password/reset-password"
+              href="/auth/password/"
               className="text-sm text-blue-600 hover:underline"
             >
               Forgot password?
             </Link>
           </div>
         </div>
-        <div>Hello{isAuthenticated}</div>
+        {/* <div>Hello{isAuthenticated}</div> */}
       </div>
     </div>
   );
