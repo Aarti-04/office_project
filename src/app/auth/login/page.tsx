@@ -7,31 +7,32 @@ import {
   GoogleLogin,
 } from "@react-oauth/google";
 import axios from "axios";
+import Auth from "@/app/components/auth";
+
+function CustomSignIn() {
+  return (
+    <GoogleLogin
+      onSuccess={(response) => {
+        // Handle the successful response here
+        console.log("Custom Google login successful", response);
+      }}
+      onError={() => {
+        // Handle errors here
+        console.error("Custom Google login failed");
+      }}
+      theme="filled_blue"
+      size="large"
+      text="continue_with"
+    />
+  );
+}
+
 const Home = () => {
   return (
     <main>
-      <GoogleOAuthProvider clientId="189496678458-qimsru4vsjae5tvfisn17gp7nh0v527k.apps.googleusercontent.com">
-        {/* <DemoLogin></DemoLogin> */}
-        {/* <Login></Login> */}
-
-        <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            console.log(credentialResponse);
-            console.log(credentialResponse.credential);
-            const res = await axios.post(
-              "http://127.0.0.1:8000/api/google-auth-verify/",
-              credentialResponse
-            );
-
-            // router.push("");
-            console.log(res);
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
+      <GoogleOAuthProvider clientId="189496678458-fpihrhl6pae85mhtq0tsra89cpguccja.apps.googleusercontent.com">
+        <Auth></Auth>
       </GoogleOAuthProvider>
-      {/* <Login></Login> */}
     </main>
   );
 };

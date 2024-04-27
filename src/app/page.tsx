@@ -13,9 +13,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <div className="justify-center min-h-screen bg-gray-100 text-black">
-        <div>
-          <h1>Welcome</h1>
-        </div>
+        <div></div>
       </div>
     </>
   );

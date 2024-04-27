@@ -48,16 +48,35 @@ const Login = () => {
     //     setError("root", { type: "manual", message: err.json.detail });
     //   });
   };
-  const login = useGoogleLogin({
-    onSuccess: async (credentialResponse) => {
-      console.log(credentialResponse);
-      const res = await axios.post(
-        "http://127.0.0.1:8000/api/google-auth-verify/",
-        credentialResponse
-      );
-    },
-    flow: "auth-code",
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: async (credentialResponse) => {
+  //     localStorage.setItem("token", credentialResponse["code"]);
+  //     const userInfo = await axios
+  //       .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+  //         headers: { Authorization: `Bearer ${credentialResponse["code"]}` },
+  //       })
+  //       .then((res) => res.data);
+
+  //     console.log(userInfo);
+  //     // console.log(credentialResponse);
+  //     // const res = await axios.post(
+  //     //   "http://127.0.0.1:8000/api/google-auth-verify/",
+  //     //   credentialResponse
+  //     // );
+  //   },
+  //   onNonOAuthError: async () => {},
+
+  //   onError: async () => {
+  //     console.log("dfdfdfd");
+  //   },
+  //   flow: "auth-code",
+  //   // redirect_uri: "http://localhost:3000/checkContent/textHamOrNot",
+  // });
+  const loginHandler = () => {
+    router.push(
+      "https://accounts.google.com/o/oauth2/auth?client_id=189496678458-lbsabcd97iss894bi6c5tjmnrv1e3vh8.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8000/api/google-auth-verify&scope=https://www.googleapis.com/auth/gmail.readonly&email&response_type=code&include_granted_scopes=true&access_type=offline&state=Za1LLGyenbWEQ0o4oM4bOaLyDopOtw"
+    );
+  };
   return (
     <div>
       {/* <Navbar></Navbar> */}
@@ -83,11 +102,13 @@ const Login = () => {
           >
             <h3 className="text-2xl font-semibold">Login to your account</h3>
           </motion.div>
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
+          <form className="mt-5">
             {/* Login using useGoogleLogin hook */}
-            {/* <div>
-              <button onClick={() => login()}>Sign in with google</button>
-            </div> */}
+            <div>
+              <button onClick={() => loginHandler()}>
+                Sign in with google
+              </button>
+            </div>
             {/* Login custome form */}
             {/* <div>
               <label className="block" htmlFor="email">
@@ -130,7 +151,7 @@ const Login = () => {
               </span>
             )} */}
             {/* Google login button */}
-            <GoogleLogin
+            {/* <GoogleLogin
               onSuccess={async (credentialResponse) => {
                 console.log(credentialResponse);
                 console.log(credentialResponse.credential);
@@ -138,14 +159,14 @@ const Login = () => {
                   "http://127.0.0.1:8000/api/google-auth-verify/",
                   credentialResponse
                 );
-                // login();
-                // router.push("");
-                // console.log(res);
+                login();
+                router.push("");
+                console.log(res);
               }}
               onError={() => {
                 console.log("Login Failed");
               }}
-            />
+            /> */}
           </form>
           <div className="mt-6 text-center">
             <Link

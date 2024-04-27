@@ -9,6 +9,7 @@ const Header = () => {
       <Link href="/auth//logout">Logout</Link>
       <Link href="/auth/password">Change Password</Link>
       <Link href="/checkContent/textHamOrNot">Predict Text</Link>
+      <Link href="/user/inbox">inbox</Link>
     </div>
   );
 };
