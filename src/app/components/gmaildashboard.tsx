@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import AppBarComponent from './appbar1';
 import DrawerComponent from './drawer1';
 import Header from './header';
+import AlignItemsList from './inbox';
 
 const GmailDashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -31,9 +32,10 @@ const GmailDashboard = () => {
 
   return (
     <>
-      {/* <AppBarComponent onMenuClick={handleMenuClick} /> */}
-      {/* <DrawerComponent open={isDrawerOpen} onClose={closeDrawer} /> */}
-      <Header></Header>
+      <AppBarComponent onMenuClick={handleMenuClick} />
+      <DrawerComponent open={isDrawerOpen} onClose={closeDrawer} />
+      {/* <Header></Header> */}
+      <AlignItemsList></AlignItemsList>
     </>
   );
 };

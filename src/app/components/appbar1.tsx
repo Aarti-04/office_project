@@ -57,6 +57,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/navigation';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import Auth from './auth';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -145,9 +147,12 @@ export default function AppBarComponent({ onMenuClick }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handlelogin}>Login</MenuItem>
+      <MenuItem>
+        <GoogleOAuthProvider clientId="189496678458-fpihrhl6pae85mhtq0tsra89cpguccja.apps.googleusercontent.com">
+          <Auth></Auth>
+        </GoogleOAuthProvider>
+      </MenuItem>
     </Menu>
   );
 
