@@ -19,8 +19,13 @@ export default function AlignItemsList() {
       const data = localStorage.getItem("my_token");
       console.log(data);
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/google-auth-verify/",
-        JSON.parse(data)
+        "http://127.0.0.1:8000/api/mailread/",
+        JSON.parse(data),
+        {
+          params: {
+            querylable: "Inbox",
+          },
+        }
       );
       setData(res.data);
       console.log(res.data);
@@ -44,50 +49,51 @@ export default function AlignItemsList() {
           <CircularProgress color="inherit" />
         </Backdrop>
       )} */}
-      {data.map((item) => {
-        return (
-          <ListItem
-            sx={{
-              display: "flex",
-              flex: 1,
-              flexDirection: "row",
-              width: "100%",
-              bgcolor: "background.paper",
-              margin: "100px",
-            }}
-            alignItems="flex-start"
-            key={item.id}
-          >
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary={item.header}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {item.body}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        actions.checkSpamOrHam(item.body);
-                      }}
+      {data.length != 0 &&
+        data.map((item) => {
+          return (
+            <ListItem
+              sx={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "row",
+                width: "100%",
+                bgcolor: "background.paper",
+                margin: "100px",
+              }}
+              alignItems="flex-start"
+              key={item.id}
+            >
+              <ListItemAvatar>
+                <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={item.header}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                      dangerouslySetInnerHTML={{ __html: item.body }}
                     >
-                      Check
-                    </Button>
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        );
-      })}
+                      {/* <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          actions.checkSpamOrHam(item.body);
+                        }}
+                      >
+                        Check
+                      </Button> */}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          );
+        })}
       <Divider variant="inset" component="li" />
     </List>
   );

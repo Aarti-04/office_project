@@ -16,18 +16,19 @@ const Auth = () => {
 
       //   res.json(data);
       console.log(data);
-      const authResponse = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
-        {
-          creds: data,
-        }
-      );
-      console.log(authResponse);
-      console.log("http://127.0.0.1:8000/api/login/", {
-        code: tokenResponse["code"],
-        creds: data,
-      });
       localStorage.setItem("my_token", JSON.stringify(data));
+      // const authResponse = await axios.post(
+      //   "http://127.0.0.1:8000/api/register/",
+      //   {
+      //     creds: data,
+      //   }
+      // );
+      // console.log(authResponse);
+      // console.log("http://127.0.0.1:8000/api/login/", {
+      //   code: tokenResponse["code"],
+      //   creds: data,
+      // });
+
       // const res = await axios.post(
       //   "http://127.0.0.1:8000/api/google-auth-verify/",
       //   data
